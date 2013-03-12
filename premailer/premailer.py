@@ -164,6 +164,10 @@ class Premailer(object):
         rules = []
 
         for style in CSSSelector('style')(page):
+            if style.attrib.get('premailer', '') == 'ignore':
+                del style.attrib['premailer']
+                continue
+            
             these_rules, these_leftover = self._parse_style_rules(style.text)
             rules.extend(these_rules)
 
